@@ -124,7 +124,7 @@ def parse_rows(raw):
         out.append({
             "name": name, "bucket": b, "price": price, "area": area, "floor": floor,
             "floor_txt": floor_txt, "gu": parts[1] if len(parts) > 1 else "",
-            "sgg": d["시군구"].strip(), "dong": d["동"].strip() if d["동"].strip() != "-" else "",
+            "sgg": d["시군구"].strip(), "dong": parts[2] if len(parts) > 2 else "",
             "year": int(d["건축년도"]) if str(d["건축년도"]).isdigit() else 0,
             "cancelled": (d["해제사유발생일"] or "").strip() not in ("-", ""),
             "direct": (d["거래유형"] or "").strip() == "직거래",
