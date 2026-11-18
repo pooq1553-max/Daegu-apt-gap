@@ -52,6 +52,8 @@
     na: { label: "비교 불가", cls: "b-na", v: "" }
   };
 
+  function base74() { return BASE.r74_84; }
+
   function baselineOf(it) {
     if (it.basis === "59/84") return BASE.r59_84;
     if (it.basis === "74/84") return BASE.r74_84;
@@ -98,6 +100,10 @@
       return "59㎡ 거래 없음. 74/84 <b>" + pct(it.ratio) + "</b>, 차액 " + diffPhrase(it) +
         ". 표본이 3건 미만이라 판정을 보류합니다.";
     }
+    if (d <= -5) {
+      return "59㎡ 거래 없음. 74/84 <b>" + pct(it.ratio) + "</b> — 정상선(" + base74 + "%)보다 <b>" +
+        signed(d) + "%p</b> 낮아 74㎡가 눌린 단지입니다. 84㎡까지 차액 " + diffPhrase(it) + " — 74㎡가 유리합니다.";
+    }
     return "59㎡ 거래 없음. 74/84 <b>" + pct(it.ratio) + "</b>(정상선 " + base74 + "%), 차액 " +
       diffPhrase(it) + " — 정상 범위입니다.";
   }
@@ -121,6 +127,9 @@
     if (it.basis) {
       out.push('<span class="fact">' + it.basis.replace("/", "·") + " " + pct(it.ratio) + "</span>");
       if (it.ratio6 != null) out.push('<span class="fact dim">최근 6개월 ' + pct(it.ratio6) + "</span>");
+      if (it.basis === "74/84" && it.ratio - base74() <= -5) {
+        out.push('<span class="fact good">74㎡ 눌림</span>');
+      }
       if (it.diff != null) {
         out.push('<span class="fact' + (it.verdict === "84" && it.diff >= 0 && it.diff <= 10000 ? " good" : "") + '">' +
           (it.diff >= 0 ? (it.basis === "59/84" ? "84−59 " : "84−74 ") + man(it.diff)
