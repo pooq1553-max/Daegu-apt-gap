@@ -181,7 +181,8 @@ def build_stats(rows, period_start, period_end, min_year=MIN_YEAR):
                 "last_floor": last["floor"],
             }
         stats[name] = rec
-    return stats
+    # 유효 거래가 하나도 남지 않은 단지(전부 해제·1~2층)는 카드로 만들지 않는다
+    return {k: v for k, v in stats.items() if any(v[b] for b in ("59", "74", "84"))}
 
 
 def ratio(a, b):
