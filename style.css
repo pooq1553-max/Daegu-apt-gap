@@ -189,8 +189,9 @@ main { padding: 10px 14px 0; display: flex; flex-direction: column; gap: 10px; }
 .v-59 .bar .fill { background: linear-gradient(90deg, #34d399, #059669); }
 .v-thin .bar .fill { background: linear-gradient(90deg, #fbbf24, #d97706); }
 .bar .mark {
-  position: absolute; top: -2px; bottom: -2px; width: 2px; background: #0f172a;
-  opacity: .5; border-radius: 2px;
+  position: absolute; top: -1px; bottom: -1px; width: 3px; background: #0b1220;
+  opacity: .9; border-radius: 2px;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .9);
 }
 
 .areas {
