@@ -1,0 +1,17 @@
+{
+  "name": "대구 평형 왜곡 — 준신축 실거래가",
+  "short_name": "평형왜곡",
+  "description": "대구 도심 준공 10년 이내 아파트 59·74·84㎡ 실거래 중앙값을 비교해 어느 평형이 상대적으로 싼지 보여줍니다.",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>대구 평형 왜곡 — 준신축 59·74·84㎡ 실거래가</title>
+<meta name="description" content="대구 도심 준공 10년 이내 아파트의 59·74·84㎡ 실거래 중앙값을 비교해, 같은 단지에서 어느 평형이 상대적으로 싼지 보여줍니다. 국토교통부 실거래가 공개시스템 원자료 기준.">
+<meta name="theme-color" content="#0b1220">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="평형왜곡">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">대구 도심 · 준공 2017년 이후</p>
+      <h1>대구 평형 왜곡</h1>
+      <p class="sub">같은 단지 안에서 <b>59㎡·74㎡·84㎡</b> 중 어느 평형이 상대적으로 싼지 — 실거래 <b>중앙값</b>으로 비교합니다.</p>
+      <p class="hero-meta" id="heroMeta">데이터 불러오는 중…</p>
+    </div>
+  </header>
+
+  <section class="kpis" aria-label="요약">
+    <div class="kpi">
+      <span class="kpi-label">조사 단지</span>
+      <strong class="kpi-value" id="kpiComplex">—</strong>
+      <span class="kpi-foot">대구 7개 구</span>
+    </div>
+    <div class="kpi kpi-blue">
+      <span class="kpi-label">84㎡ 추천</span>
+      <strong class="kpi-value" id="kpi84">—</strong>
+      <span class="kpi-foot">59·74가 비쌈</span>
+    </div>
+    <div class="kpi kpi-green">
+      <span class="kpi-label">59㎡ 추천</span>
+      <strong class="kpi-value" id="kpi59">—</strong>
+      <span class="kpi-foot">59가 눌림</span>
+    </div>
+    <div class="kpi kpi-gray">
+      <span class="kpi-label">시장 정상선</span>
+      <strong class="kpi-value kpi-small" id="kpiBase">—</strong>
+      <span class="kpi-foot" id="kpiBaseFoot">59/84 · 74/84</span>
+    </div>
+  </section>
+
+  <nav class="controls" aria-label="필터">
+    <div class="tabs" role="tablist" id="tabs">
+      <button class="tab is-active" role="tab" data-tab="all">전체</button>
+      <button class="tab" role="tab" data-tab="rec84"><span class="dot dot-blue"></span>84 추천</button>
+      <button class="tab" role="tab" data-tab="rec59"><span class="dot dot-green"></span>59 추천</button>
+      <button class="tab" role="tab" data-tab="near74"><span class="dot dot-gray"></span>74·84 근접</button>
+    </div>
+
+    <div class="search-row">
+      <div class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
+        <input type="search" id="q" placeholder="단지명·동 이름 검색" autocomplete="off" enterkeyhint="search" aria-label="단지명 검색">
+      </div>
+      <select id="sort" aria-label="정렬">
+        <option value="gap">정상선 대비 큰 순</option>
+        <option value="rdesc">59/84 높은순</option>
+        <option value="rasc">59/84 낮은순</option>
+        <option value="diffasc">차액 적은순</option>
+        <option value="trade">거래건수순</option>
+      </select>
+    </div>
+
+    <div class="gus" id="gus" aria-label="구 필터"></div>
+
+    <div class="result-line">
+      <span id="resultCount">—</span>
+      <span class="legend"><i class="legend-mark"></i>막대 <b class="legend-tick">|</b> 표시 = 시장 정상선</span>
+    </div>
+  </nav>
+
+  <main id="list" aria-live="polite">
+    <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+  </main>
+
+  <footer class="foot">
+    <details>
+      <summary>판정 기준 · 데이터 출처 · 한계</summary>
+      <div class="foot-body" id="footBody">
+        <h3>판정 규칙</h3>
+        <ul>
+          <li><b>84㎡ 추천</b> — 59/84가 <b>80% 이상</b>(소형 프리미엄 과다), 또는 59㎡ 거래가 없고 74/84가 <b>93% 이상</b>(74를 84 값에 가깝게 부름)</li>
+          <li><b>59㎡ 추천</b> — 59/84가 <b>70% 이하</b>(소형이 눌림)</li>
+          <li><b>관찰</b> — 70~80% 사이(시장 정상 범위)</li>
+          <li><b>표본 부족</b> — 비교하는 두 평형 중 하나가 <b>3건 미만</b>이라 판정 보류</li>
+        </ul>
+        <h3>집계 기준</h3>
+        <ul>
+          <li>대구광역시 7개 구(중구·수성구·남구·달서구·북구·동구·서구), 건축년도 2017년 이후</li>
+          <li>전용 55~66㎡ = 59형, 66~79㎡ = 74형, 79~92㎡ = 84형</li>
+          <li><b>해제(취소) 신고</b>와 <b>1~2층 거래</b>는 제외 — 저층·해제가 비율을 최대 10%p까지 흔듭니다</li>
+          <li>대표값은 <b>중앙값</b>(이상거래·특수관계 거래 영향 축소), 최근 6개월 비율을 함께 표시</li>
+        </ul>
+        <h3>한계</h3>
+        <ul>
+          <li>이 비교는 <b>같은 단지 안에서 어느 평형이 상대적으로 싼가</b>만 봅니다. 단지 간 비교는 입지·학군·연식이 섞여 별도 판단이 필요합니다.</li>
+          <li>계약 후 30일 내 신고되므로 최근 1~2개월은 과소 집계입니다.</li>
+          <li>향·동·관리비·학군·입주 물량·금리는 반영하지 않았습니다.</li>
+          <li>84형 안에서도 84.4~85.0㎡ 타입별로 1,000~2,000만원 차이가 날 수 있습니다.</li>
+        </ul>
+        <h3>출처</h3>
+        <p>국토교통부 실거래가 공개시스템(rt.molit.go.kr) 아파트 매매 내려받기 원자료. 매일 1회 자동 갱신됩니다. 참고용이며 법적 효력이 없습니다.</p>
+      </div>
+    </details>
+    <p class="foot-line">서버비 0원 · GitHub Pages 정적 호스팅 · 자료는 참고용</p>
+  </footer>
+</div>
+<script src="app.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+</script>
+</body>
+</html>
